@@ -1,14 +1,8 @@
-crypto = require 'crypto'
-
 lists = {}
 
 uniqueID = do ->
   c = 0
-  ->
-    c++
-    crypto.createHmac('sha1', 'whatevz')
-      .update(c.toString())
-      .digest('hex')
+  -> ++c
 
 module.exports =
 
