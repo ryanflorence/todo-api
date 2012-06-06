@@ -74,6 +74,9 @@ module.exports =
     item = list.items[itemID]
     return false unless item
 
+    # make sure we don't corrupt anything
+    delete item[key] for key in ['path', 'id']
+
     item[key] = value for key, value of updates
     item
 
