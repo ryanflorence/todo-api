@@ -14,17 +14,26 @@ module.exports =
 
   create: (name) ->
     id = uniqueID()
-    list = lists[id] = {}
-    list.name = name
-    list.items = {}
+    lists[id] =
+      name: name
+      id: id
+      items: {}
+
     # kill it off in a week or whatever ENV says
     setTimeout =>
       @destroy id
     , parseInt(process.env.LIST_LIFESPAN, 10) or 604800000
-    list
+
+    lists[id]
 
   read: (id) ->
-    lists[id] or false
+    if list = lists[id]
+      items = (item for itemID, item of list.items)
+      name: list.name
+      items: items
+      id: list.id
+    else
+      false
 
   destroy: (id) ->
     if lists[id]?
@@ -33,15 +42,19 @@ module.exports =
       false
 
   update: (id, newName) ->
-    lists[id].name = newName
+    if list = lists[id]
+      list.name = newName
+      @read id
+    else
+      false
 
   index: ->
     {id, name} for id, {name} of lists
 
   createItem: (listID, item) ->
-    if lists[listID]
+    if list = lists[listID]
       item.id = uniqueID()
-      lists.items[listID].items[item.id] = item
+      list.items[item.id] = item
     else
       false
 
@@ -51,15 +64,19 @@ module.exports =
     else
       false
 
-  getItem: (listID, itemID) ->
-    lists[listID]?.items[itemID]? or false
+  readItem: (listID, itemID) ->
+    lists[listID]?.items[itemID] or false
 
-  updateItem: (listID, itemID, item) ->
+  updateItem: (listID, itemID, updates) ->
     list = lists[listID]
     return false unless list
 
     item = list.items[itemID]
     return false unless item
 
-    item[key] = value for key, value of item
+    item[key] = value for key, value of updates
+    item
+
+  raw: ->
+    lists
 

@@ -1,19 +1,20 @@
 {
-    "name": "morsels"
-  , "version": "0.0.1"
-  , "private": true
-  , "dependencies": {
-      "express": "2.5.8"
-    , "coffee-script": "1.2.0"
-    , "mongoose": "2.5.10"
-  }
-  , "devDependencies": {
-      "request": "*"
-    , "mocha": "*"
-    , "should": "*"
-    , "growl": "*"
-  }
-  , "engines": {
-    "node": "0.6.8"
+  "name": "todo-api",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "2.5.8",
+    "coffee-script": "1.2.0"
+  },
+  "devDependencies": {
+    "request": "*",
+    "mocha": "*",
+    "should": "*"
+  },
+  "engines": {
+    "node": "0.6"
+  },
+  "scripts": {
+    "test": "mocha"
   }
 }
+

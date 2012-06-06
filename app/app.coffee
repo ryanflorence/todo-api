@@ -1,7 +1,9 @@
 express = require 'express'
 routes = require "#{process.cwd()}/app/routes"
+lists = require "#{__dirname}/lists"
 
 app = module.exports = express.createServer()
+app.lists = lists
 
 app.configure ->
   app.use express.bodyParser()
@@ -38,6 +40,6 @@ app.get   '/lists/:listID/items/:itemID', routes.getItem
 app.del   '/lists/:listID/items/:itemID', routes.deleteItem
 app.put   '/lists/:listID/items/:itemID', routes.updateItem
 
-app.listen process.env.PORT
+app.listen process.env.PORT or 5000
 msg = 'Express server listening on port %d in %s mode'
 console.log msg, app.address().port, app.settings.env
