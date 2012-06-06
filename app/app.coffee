@@ -21,12 +21,12 @@ app.configure 'development', ->
     showStack: true
 
 app.configure 'production', ->
-  app.use express.errorHandler
-    dumpExceptions: true
-    showStack: true
+  app.use express.errorHandler()
 
 app.configure 'test', ->
   app.use express.errorHandler()
+
+app.get   '/',                            routes.home
 
 app.get   '/lists',                       routes.allLists
 
