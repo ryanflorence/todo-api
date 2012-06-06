@@ -7,15 +7,18 @@ grown up.
 Find it on heroku (for now) at [http://high-robot-9464.herokuapp.com/][u]
 
 RESTful API
+===========
+
+POST /lists
 -----------
 
-### `POST /lists`
+Creates a new lists.
 
-#### body
+### body
 
 - `name` - The lists name
 
-#### response
+### response
 
 ```javascript
 {
@@ -25,13 +28,16 @@ RESTful API
 }
 ```
 
-#### notes
+### notes
 
 All lists are destroyed after a week.
 
-### `GET /lists`
+GET /lists
+----------
 
-#### response
+Gets all lists.
+
+### response
 
 ```javascript
 [
@@ -44,9 +50,12 @@ All lists are destroyed after a week.
 ]
 ```
 
-### `GET /lists/:listID`
+GET /lists/:listID
+------------------
 
-#### response
+Gets a list by ID.
+
+### response
 
 ```javascript
 {
@@ -57,19 +66,25 @@ All lists are destroyed after a week.
 }
 ```
 
-### `DELETE /lists/:listID`
+DELETE /lists/:listID
+---------------------
 
-#### response
+Deletes a list.
+
+### response
 
 `list deleted`
 
-### `PUT /lists/:listID`
+PUT /lists/:listID
+------------------
 
-#### body
+Updates a list.
+
+### body
 
 - `name` - The list's new name
 
-#### response
+### response
 
 ```javascript
 {
@@ -79,9 +94,12 @@ All lists are destroyed after a week.
 }
 ```
 
-### `POST /lists/:listID/items`
+POST /lists/:listID/items
+-------------------------
 
-#### body
+Creates an item in a list.
+
+### body
 
 Typically:
 
@@ -91,7 +109,7 @@ Typically:
 However, there is no schema at all, so you can store anything you want
 in an item.
 
-#### response
+### response
 
 ```javascript
 {
@@ -103,9 +121,12 @@ in an item.
 }
 ```
 
-### `GET /lists/:listID/items/:itemID`
+GET /lists/:listID/items/:itemID
+--------------------------------
 
-#### response
+Gets a list item.
+
+### response
 
 ```javascript
 {
@@ -117,17 +138,23 @@ in an item.
 }
 ```
 
-### `DELETE /lists/:listID/items/:itemID`
+DELETE /lists/:listID/items/:itemID
+-----------------------------------
 
-#### response
+Removes a list item.
+
+### response
 
 ```javascript
 'item deleted'
 ```
 
-### `PUT /lists/:listID/items/:itemID`
+PUT /lists/:listID/items/:itemID
+--------------------------------
 
-#### body
+Updates a list item.
+
+### body
 
 Typically:
 
@@ -137,7 +164,7 @@ Typically:
 However, there is no schema at all, so you can store anything you want
 in an item.
 
-#### response
+### response
 
 ```javascript
 {
@@ -150,7 +177,7 @@ in an item.
 ```
 
 Contributing
-------------
+============
 
 Run tests with `npm test`.
 
