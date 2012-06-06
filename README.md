@@ -11,6 +11,6 @@ coffeescript.
 
 **NOTE:** all lists are deleted after a week.
 
-  [api]:/blob/master/test/api.coffee
+  [api]:https://github.com/rpflorence/todo-api/blob/master/test/api.coffee
   [u]:http://high-robot-9464.herokuapp.com/
 
