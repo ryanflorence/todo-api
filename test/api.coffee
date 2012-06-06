@@ -58,7 +58,7 @@ describe 'List API:', ->
           url: "#{api}/lists/#{list.id}"
           json: true
         , (err, res, body) ->
-          body.should.equal 'ok'
+          body.should.equal 'list deleted'
           res.statusCode.should.equal 200
           done()
 
