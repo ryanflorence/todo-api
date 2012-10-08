@@ -179,7 +179,7 @@ in an item.
 Contributing
 ============
 
-Run tests with `npm test`.
+Run tests with `mocha test`.
 
 
   [api]:https://github.com/rpflorence/todo-api/blob/master/test/api.coffee
