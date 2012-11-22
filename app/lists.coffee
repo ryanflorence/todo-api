@@ -43,7 +43,7 @@ module.exports =
       false
 
   index: ->
-    {id, name} for id, {name} of lists
+    {id: parseInt(id), name: name} for id, {name} of lists
 
   createItem: (listID, item) ->
     if list = lists[listID]
