@@ -1,8 +1,9 @@
 lists = require "#{__dirname}/../lists"
 
 module.exports = (req, res) ->
-  if list = lists.update req.params.listID, req.body.name
-    res.json list
-  else
-    res.json 'list not found', 404
+  try
+    list = lists.update req.params.list_id, req.body.name
+    res.json {list}
+  catch error
+    res.json error.toString(), 404
 

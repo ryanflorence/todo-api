@@ -1,8 +1,9 @@
 lists = require "#{__dirname}/../lists"
 
 module.exports = ({params}, res) ->
-  if lists.deleteItem params.listID, params.itemID
+  try
+    lists.deleteItem params.item_id
     res.json 'item deleted'
-  else
-    res.json 'list or item not found', 404
+  catch error
+    res.json error.toString(), 404
 

@@ -1,6 +1,7 @@
 express = require 'express'
 routes = require "#{process.cwd()}/app/routes"
 lists = require "#{__dirname}/lists"
+fixtures = require "#{__dirname}/fixtures"
 
 app = module.exports = express.createServer()
 app.lists = lists
@@ -26,19 +27,21 @@ app.configure 'production', ->
 app.configure 'test', ->
   app.use express.errorHandler()
 
-app.get   '/',                            routes.home
+fixtures.load()
 
-app.get   '/lists',                       routes.allLists
+app.get   '/',               routes.home
 
-app.post  '/lists',                       routes.createList
-app.get   '/lists/:listID',               routes.getList
-app.del   '/lists/:listID',               routes.deleteList
-app.put   '/lists/:listID',               routes.updateList
+app.get   '/lists',          routes.allLists
 
-app.post  '/lists/:listID/items',         routes.createItem
-app.get   '/lists/:listID/items/:itemID', routes.getItem
-app.del   '/lists/:listID/items/:itemID', routes.deleteItem
-app.put   '/lists/:listID/items/:itemID', routes.updateItem
+app.post  '/lists',          routes.createList
+app.get   '/lists/:list_id', routes.getList
+app.del   '/lists/:list_id', routes.deleteList
+app.put   '/lists/:list_id', routes.updateList
+
+app.post  '/items',          routes.createItem
+app.get   '/items/:item_id', routes.getItem
+app.del   '/items/:item_id', routes.deleteItem
+app.put   '/items/:item_id', routes.updateItem
 
 app.listen process.env.PORT or 5000
 msg = 'Express server listening on port %d in %s mode'

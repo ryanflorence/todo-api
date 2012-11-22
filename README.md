@@ -22,15 +22,16 @@ Creates a new lists.
 
 ```javascript
 {
-  id: <id>,
-  name: <name>,
-  path: <path relative to host>
+  list: {
+    id: <id>,
+    name: <name>
+  }
 }
 ```
 
 ### notes
 
-All lists are destroyed after a week.
+All lists are public and destroyed when the server is restarted, or after a week.
 
 GET /lists
 ----------
@@ -40,33 +41,35 @@ Gets all lists.
 ### response
 
 ```javascript
-[
-  {
-    id: <id>,
-    name: <name>,
-    path: <path relative to host>
-  },
-  ...
-]
+{
+  lists: [
+    {
+      id: <id>,
+      name: <name>
+    },
+    ...
+  ]
+}
 ```
 
-GET /lists/:listID
+GET /lists/:list_id
 ------------------
 
-Gets a list by ID.
+Gets a list by ID with embedded items.
 
 ### response
 
 ```javascript
 {
-  id: <id>,
-  name: <name>,
-  path: <path relative to host>,
-  items: [item]
+  list: {
+    id: <id>,
+    name: <name>,
+    items: [item]
+  }
 }
 ```
 
-DELETE /lists/:listID
+DELETE /lists/:list_id
 ---------------------
 
 Deletes a list.
@@ -75,7 +78,7 @@ Deletes a list.
 
 `list deleted`
 
-PUT /lists/:listID
+PUT /lists/:list_id
 ------------------
 
 Updates a list.
@@ -88,14 +91,15 @@ Updates a list.
 
 ```javascript
 {
-  id: <id>,
-  name: <name>,
-  path: <path relative to host>
+  list: {
+    id: <id>,
+    name: <name>
+  }
 }
 ```
 
-POST /lists/:listID/items
--------------------------
+POST /items
+-----------
 
 Creates an item in a list.
 
@@ -103,26 +107,28 @@ Creates an item in a list.
 
 Typically:
 
+- `list_id` - The id to the list the item belongs to
 - `description` - Description of the todo item
 - `complete` - boolean if the item is complete or not
 
 However, there is no schema at all, so you can store anything you want
-in an item.
+in an item, just make sure you send a `list_id`.
 
 ### response
 
 ```javascript
 {
-  id: <id>,
-  path: <path relative to host>
-  description: <description>
-  complete: <true/false>
-  ...
+  item: {
+    id: <id>,
+    description: <description>
+    complete: <true/false>
+    ...
+  }
 }
 ```
 
-GET /lists/:listID/items/:itemID
---------------------------------
+GET /items/:item_id
+-------------------
 
 Gets a list item.
 
@@ -130,16 +136,17 @@ Gets a list item.
 
 ```javascript
 {
-  id: <id>,
-  path: <path relative to host>
-  description: <description>
-  complete: <true/false>
-  ...
+  item: {
+    id: <id>,
+    description: <description>
+    complete: <true/false>
+    ...
+  }
 }
 ```
 
-DELETE /lists/:listID/items/:itemID
------------------------------------
+DELETE /items/:item_id
+----------------------
 
 Removes a list item.
 
@@ -149,8 +156,8 @@ Removes a list item.
 'item deleted'
 ```
 
-PUT /lists/:listID/items/:itemID
---------------------------------
+PUT /items/:item_id
+-------------------
 
 Updates a list item.
 
@@ -168,11 +175,13 @@ in an item.
 
 ```javascript
 {
-  id: <id>,
-  path: <path relative to host>
-  description: <description>
-  complete: <true/false>
-  ...
+  item: {
+    id: <id>,
+    path: <path relative to host>
+    description: <description>
+    complete: <true/false>
+    ...
+  }
 }
 ```
 
@@ -180,7 +189,6 @@ Contributing
 ============
 
 Run tests with `mocha test`.
-
 
   [api]:https://github.com/rpflorence/todo-api/blob/master/test/api.coffee
   [u]:http://high-robot-9464.herokuapp.com/

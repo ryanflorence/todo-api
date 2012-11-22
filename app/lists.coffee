@@ -1,15 +1,19 @@
 lists = {}
+items = {}
 
 uniqueID = do ->
   c = 0
   -> ++c
 
+chuck = (type, id) ->
+  throw new Error "#{type} with id #{id} not found."
+
 module.exports =
 
-  create: (name) ->
+  create: (list) ->
     id = uniqueID()
     lists[id] =
-      name: name
+      name: list.name
       id: id
       items: {}
 
@@ -22,51 +26,50 @@ module.exports =
 
   read: (id) ->
     if list = lists[id]
-      items = (item for itemID, item of list.items)
+      items = (item for item_id, item of list.items)
       name: list.name
       items: items
       id: list.id
     else
-      false
+      chuck 'list', id
 
   destroy: (id) ->
     if lists[id]?
       delete lists[id]
     else
-      false
+      chuck 'list', id
 
   update: (id, newName) ->
     if list = lists[id]
       list.name = newName
       @read id
     else
-      false
+      chuck 'list', id
 
   index: ->
     {id: parseInt(id), name: name} for id, {name} of lists
 
-  createItem: (listID, item) ->
-    if list = lists[listID]
+  createItem: (item) ->
+    if list = lists[item.list_id]
       item.id = uniqueID()
       list.items[item.id] = item
+      items[item.id] = item
     else
-      false
+      chuck 'list', list_id
 
-  deleteItem: (listID, itemID) ->
-    if lists[listID]?.items[itemID]?
-      delete lists[listID].items[itemID]
+  deleteItem: (item_id) ->
+    if item = items[item_id]
+      delete lists[item.list_id].items[item.id]
+      delete items[item.id]
     else
-      false
+      chuck 'item', item_id
 
-  readItem: (listID, itemID) ->
-    lists[listID]?.items[itemID] or false
+  readItem: (item_id) ->
+    items[item_id] ? chuck 'item', item_id
 
-  updateItem: (listID, itemID, updates) ->
-    list = lists[listID]
-    return false unless list
-
-    item = list.items[itemID]
-    return false unless item
+  updateItem: (item_id, updates) ->
+    item = items[item_id]
+    chuck 'item', item_id unless item?
 
     # make sure we don't corrupt anything
     delete item[key] for key in ['path', 'id']
